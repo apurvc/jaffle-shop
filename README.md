@@ -21,7 +21,7 @@ dbt debug # test connection with bigquery and profile is correctly setup
 
 Sample run
 
-(dbt-env) cloud_user_p_448bd91e@cloudshell:~/jaffle-shop (playground-s-11-24a78817)$ dbt debug
+(dbt-env) cloud_user_p_448bd91e@cloudshell:~/jaffle-shop (playground)$ dbt debug
 17:06:27  Running with dbt=1.8.3
 17:06:27  dbt version: 1.8.3
 17:06:27  python version: 3.10.12
@@ -77,7 +77,7 @@ dbt seed
 ```bash
 dbt run
 
-(dbt-env) cloud_user_p_448bd91e@cloudshell:~/jaffle-shop (playground-s-11-24a78817)$ dbt run
+(dbt-env) cloud_user_p_448bd91e@cloudshell:~/jaffle-shop (playground)$ dbt run
 16:38:39  Running with dbt=1.8.3
 16:38:40  Registered adapter: bigquery=1.8.2
 16:38:41  Unable to do partial parsing because profile has changed

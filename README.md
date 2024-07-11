@@ -1,7 +1,7 @@
-#A Fork of Jaffle shop github repo to setup against Bigquery
+# A Fork of Jaffle shop github repo to setup against Bigquery
 
 # 🥪 The Jaffle Shop BigQuery Fork 🦘
-*If interested see https://github.com/dbt-labs/jaffle-shop*
+*Original repository here https://github.com/dbt-labs/jaffle-shop*
 
 **Setup you can run in cloud shell**
 
@@ -12,7 +12,7 @@ source dbt-env/bin/activate
 pip install dbt-core dbt-bigquery
 ```
 
-2. Update GCP project id in `profiles.yml` and then run `dbt deps` to test if the configs are correct for you to run against BigQuery.
+2. Update **GCP project id** in `profiles.yml` and then run `dbt deps` to test if the configs are correct for you to run against BigQuery.
 
 ```bash
 dbt deps # installs the dependency defined in packages.yml
@@ -65,11 +65,11 @@ Sample run
 
 ```
 
-3. check `seed-paths` config in your `dbt-project.yml` , you can run `jafgen` and `seed` to populate the raw generated data present in jaffle-data folder.
+3. As DBT transforms existing data we will populate some raw data present in jaffle-data folder. If you want to generate more data check `seed-paths` config in your `dbt-project.yml`, you can run `jafgen` and then `seed` to work on generated data. This is another approach people use for testing the transformations.
 
 ```bash
 (optional) jafgen [number of years to generate] # e.g. jafgen 6
-dbt seed
+dbt seed # it will load the data raw data in bigquery. 
 ```
 
 4. Execute `dbt run` to get the transformations done on Raw data.
@@ -118,3 +118,37 @@ dbt run
 16:39:24  
 16:39:24  Done. PASS=13 WARN=0 ERROR=0 SKIP=0 TOTAL=13
 ```
+** Docs and Lineage ** 
+5. Execute `dbt docs generate ` to get the documentations generated for the code.
+
+```bash
+(dbt-env) cloud_user_p_c2d60e26@cloudshell:~/jaffle-shop (playground-s-11-96c13f89)$ dbt docs generate
+19:55:51  Running with dbt=1.8.3
+19:55:52  Registered adapter: bigquery=1.8.2
+19:55:53  Found 13 models, 6 seeds, 27 data tests, 6 sources, 19 metrics, 770 macros, 6 semantic models, 3 saved queries, 3 unit tests
+19:55:53  
+19:55:53  Concurrency: 1 threads (target='dev')
+19:55:53  
+19:55:56  Building catalog
+19:56:03  Catalog written to /home/cloud_user_p_c2d60e26/jaffle-shop/target/catalog.json
+```
+
+5. Once successfull run `dbt docs serve --port 8080` in cloud shell to get the docs served locally. For production use cases this can be served from bucket or other appropriate approaches.
+
+```bash
+19:56:49  Running with dbt=1.8.3
+http://localhost:8080
+Serving docs at 8080
+To access from your browser, navigate to: http://localhost:8080
+
+Press Ctrl+C to exit.
+127.0.0.1 - - [11/Jul/2024 19:56:59] "GET /?authuser=0&redirectedPreviously=true HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jul/2024 19:57:00] "GET /manifest.json?cb=1720727820239 HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jul/2024 19:57:00] "GET /catalog.json?cb=1720727820239 HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jul/2024 19:57:00] code 404, message File not found
+127.0.0.1 - - [11/Jul/2024 19:57:00] "GET /$%7Brequire('./assets/favicons/favicon.ico')%7D HTTP/1.1" 404 -
+```
+
+you can open the browser to localhost:8080 , as we are using cloud shell we use the Web preview option as described in https://cloud.google.com/shell/docs/using-web-preview
+
+![dbt Lineage](https://github.com/apurvc/jaffle-shop/blob/dd62ad82d8fdea091e1695306fc3faaa72837c39/DBT%20lineage.png)

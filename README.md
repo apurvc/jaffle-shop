@@ -118,7 +118,8 @@ dbt run
 16:39:24  
 16:39:24  Done. PASS=13 WARN=0 ERROR=0 SKIP=0 TOTAL=13
 ```
-** Docs and Lineage ** 
+## Docs and Lineage
+
 5. Execute `dbt docs generate ` to get the documentations generated for the code.
 
 ```bash
@@ -133,7 +134,7 @@ dbt run
 19:56:03  Catalog written to /home/cloud_user_p_c2d60e26/jaffle-shop/target/catalog.json
 ```
 
-5. Once successfull run `dbt docs serve --port 8080` in cloud shell to get the docs served locally. For production use cases this can be served from bucket or other appropriate approaches.
+6. Once successfull run `dbt docs serve --port 8080` in cloud shell to get the docs served locally. For production use cases this can be served from bucket or other appropriate approaches.
 
 ```bash
 19:56:49  Running with dbt=1.8.3
